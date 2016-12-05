@@ -29,5 +29,8 @@
 
 **Testing**
 - Karma (https://karma-runner.github.io/1.0/index.html)
+  - karma-mocha-reporter (https://www.npmjs.com/package/karma-mocha-reporter)
+  - karma-browserify (https://www.npmjs.com/package/karma-browserify)
+    - watchify (https://www.npmjs.com/package/watchify)
 - Jasmine (https://jasmine.github.io/)
 - PhantomJS (http://phantomjs.org/)
