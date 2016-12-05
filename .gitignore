@@ -1,0 +1,7 @@
+server/.tmp
+server/dump.rdb
+server/node_modules/
+web/dist/
+web/node_modules/
+web/bower_components/
+**/._.DS_Store

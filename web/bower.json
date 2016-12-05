@@ -1,0 +1,27 @@
+{
+  "name": "bookslibrary",
+  "description": "Test application for angular, bootstrap and sails REST api",
+  "main": "app.js",
+  "authors": [
+    "Gaspar Nagy <gaspar.nagy13@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "bootstrap"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-strap": "^2.3.10",
+    "angular": "1.5",
+    "angular-route": "^1.5.9",
+    "bootstrap": "^3.3.7"
+  }
+}
