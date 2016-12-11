@@ -33,8 +33,10 @@ class BooksService {
 	load (bookId) {
 		return this.HttpService
 			.get(BaseUrl, { id: bookId })
-			.then((response) => response.data)
-			.catch(() => this._showAlert);
+			.then(
+				(response) => response.data,
+				() => this._showAlert
+			);
 	}
 
 	/**
@@ -64,23 +66,30 @@ class BooksService {
 		}
 		return this.HttpService
 			.get(BaseUrl, params)
-			.then((response) => response.data)
-			.catch(() => this._showAlert);
+			.then(
+				(response) => response.data,
+				() => this._showAlert
+			);
 	}
 
 	/**
-	 * Delete a book
+	 * Delete a book and books image if it had
 	 *
-	 * @param {Number} bookId
+	 * @param {Object} book
 	 *
 	 * @public
 	 * @return {Promise}
 	 */
-	delete (bookId) {
+	delete (book) {
+		if (book.imagePath) {
+			this._deleteImage(book.imagePath);
+		}
 		return this.HttpService
-			.delete(BaseUrl, { id: bookId })
-			.then((response) => response.file)
-			.catch(() => this._showAlert);
+			.delete(BaseUrl, { id: book.id })
+			.then(
+				null,
+				() => this._showAlert
+			);
 	}
 
 	/**
@@ -101,8 +110,10 @@ class BooksService {
 
 		return this.HttpService
 			.post(`${BaseUrl}/create`, book)
-			.then((response) => response.data)
-			.catch(() => this._showAlert);
+			.then(
+				(response) => response.data,
+				() => this._showAlert
+			);
 	}
 
 	/**
@@ -127,8 +138,10 @@ class BooksService {
 
 		return this.HttpService
 			.post(`${BaseUrl}/update/${book.id}`, book)
-			.then((response) => response.data)
-			.catch(() => this._showAlert);
+			.then(
+				(response) => response.data,
+				() => this._showAlert
+			);
 	}
 
 	/**
@@ -152,8 +165,10 @@ class BooksService {
 					'Content-Type': undefined,
 				},
 			})
-			.then((response) => response.data.file)
-			.catch(() => this._showAlert);
+			.then(
+				(response) => response.data.file,
+				() => this._showAlert
+			);
 	}
 
 	/**

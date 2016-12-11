@@ -68,6 +68,7 @@ I didn't created a bunch of validations. On backend the sails blueprint api and 
     - watchify (https://www.npmjs.com/package/watchify)
   - karma-phantomjs-launcher
   - karma-jasmine
+  - core-js (https://www.npmjs.com/package/core-js)
 - Jasmine (https://jasmine.github.io/)
 - PhantomJS (http://phantomjs.org/)
 
@@ -109,7 +110,7 @@ gulp
 
 In the `default` task I used a watcher function (`gulp.watch`), which is watching `js`, `html` and `less` files in `src` folder. When there is a change it automaticaly starts `lint:app`, `set:app` and `set:less` tasks.
 
-# ES6 and ES7
+# ES6, ES7 and ES2017
 
 I am using `Babel` to compile new features of ES6 and ES7. For ES6 features there is a babel preset `babel-preset-es2015`. For `async/await` there is `transform-async-functions` and `transform-regenerator`. To run this I have to import into my project `regenerator-runtime/runtime` which is runtime for regenerator-compiled generator. It allows me to use modular system with `import` and `export` which compiles to CommonJS.
 
@@ -137,3 +138,7 @@ I choosed this layout because you have clearly defined where to find entities an
 
 ## Backend
 I use here the default sails folder structure (http://sailsjs.com/documentation/anatomy/my-app).
+
+# ISSUES
+
+I have a same problem like this http://stackoverflow.com/questions/41028434/angular-1-5-async-await-jasmine-tests. You can find this issue in `src/entities/books/form/component.spec.js` - this test fails. Majority of my methods are async, which means I can'n write more tests, but I dont want to use $q (which can solve the issue) instead of async/await.

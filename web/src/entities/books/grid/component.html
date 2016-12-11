@@ -76,7 +76,7 @@
 				<p class="books-grid__options" ng-if="$ctrl.libraryPage">
 					<a href="#" class="btn btn-default" role="button" ng-click="$ctrl.openModal(book)">View</a>
 					<a href="#" class="btn btn-primary" ui-sref="books-edit-view({ bookId: book.id })" role="button">Edit</a>
-					<a href="#" class="btn btn-danger" ng-click="$ctrl.openPopover($event, book.id, $index)" role="button">Delete</a>
+					<a href="#" class="btn btn-danger" ng-click="$ctrl.openPopover($event, book, $index)" role="button">Delete</a>
 				</p>
 
 			</div>
@@ -85,6 +85,7 @@
 
 	</div>
 
-	<div class="col-xs-12" ng-if="!filteredBooks.length">No result. Please change the filter options.</div>
+	<div class="col-xs-12" ng-if="!filteredBooks.length && $ctrl.books.length">No result. Please change the filter options.</div>
+	<div class="col-xs-12" ng-if="!$ctrl.books.length">No books found.</div>
 
 </div>

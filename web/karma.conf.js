@@ -9,7 +9,14 @@ module.exports = function (config) {
 		reporters: [ 'mocha' ],
 		browsers: [ 'PhantomJS' ],
 
-		files: [ 'src/**/*spec.js' ],
+		files: [
+			'node_modules/core-js/client/core.min.js',
+			'dist/vendor/bowerPackages.js',
+			'dist/vendor/npmPackages.js',
+			'dist/app.js',
+			'node_modules/angular-mocks/angular-mocks.js',
+			'src/**/*spec.js',
+		],
 		exclude: [],
 		preprocessors: {
 			'src/**/*spec.js': [ 'browserify' ],
@@ -25,6 +32,7 @@ module.exports = function (config) {
 			extensions: [ '.js' ],
 			transform: [ 'babelify' ],
 			plugin: [ 'stringify' ],
+			paths: [ './node_modules', './src/' ],
 		},
 	});
 };

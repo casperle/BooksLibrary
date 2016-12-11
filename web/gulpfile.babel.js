@@ -67,7 +67,7 @@ function appBundler () {
 		.plugin(babelHelpers)
 		.transform(babelify.configure(
 			Object.assign({}, babelOptions, {
-				plugins: babelOptions.plugins.concat('external-helpers-2'),
+				plugins: babelOptions.plugins.concat('external-helpers'),
 			})
 		))
 		.require(require.resolve(paths.appFile), { entry: true });

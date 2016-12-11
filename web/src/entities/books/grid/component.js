@@ -79,12 +79,12 @@ class BooksGridViewComponent {
 	 *
 	 * @public
 	 */
-	async openPopover (event, bookId, index) {
+	async openPopover (event, book, index) {
 		const $popoverScope = this.$scope.$new(true);
 
 		Object.assign($popoverScope, {
 			deleteBook: this.deleteBook,
-			bookId,
+			book,
 			index,
 		});
 
@@ -112,8 +112,8 @@ class BooksGridViewComponent {
 	 * @public
 	 */
 	@autobind
-	async deleteBook (bookId, index) {
-		await this.BooksService.delete(bookId);
+	async deleteBook (book, index) {
+		await this.BooksService.delete(book);
 
 		this.books.splice(index, 1);
 		this.$scope.$apply();
