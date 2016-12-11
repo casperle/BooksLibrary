@@ -1,0 +1,93 @@
+<h1 ng-if="!$ctrl.book.id">Add a new Book</h1>
+<a ui-sref="books-library-view" ng-if="$ctrl.book.id" class="btn btn-default book-form__back-button" href="#" role="button">
+	<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+	Back
+</a>
+<h1 ng-if="$ctrl.book.id" class="book-form__header">Edit the Book</h1>
+<hr>
+
+<form class="book-form" ng-submit="$ctrl.saveBook()" name="$ctrl.bookForm" novalidate>
+
+	<div class="row">
+		<div class="form-group col-sm-6 col-md-6 ng-class: { 'has-error': $ctrl.bookForm.title.$invalid && $ctrl.bookForm.title.$touched }">
+			<label class="control-label" for="title">Title *</label>
+			<input required name="title" type="text" class="form-control" id="title" ng-model="$ctrl.book.title" placeholder="Some awesome book">
+		</div>
+
+		<div class="form-group col-sm-6 col-md-6 ng-class: { 'has-error': $ctrl.bookForm.author.$invalid && $ctrl.bookForm.author.$touched }">
+			<label class="control-label" for="author">Author *</label>
+			<input required name="author" type="string" class="form-control" id="author" ng-model="$ctrl.book.author" placeholder="Author">
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="form-group col-sm-6 col-md-6 ng-class: { 'has-error': $ctrl.bookForm.shopUrl.$invalid }">
+			<label class="control-label" for="shopUrl">Where to buy? (link)</label>
+			<input name="shopUrl" type="url" class="form-control" id="shopUrl" ng-model="$ctrl.book.shopUrl" placeholder="https://someshop.com/some-awesome-book">
+		</div>
+
+		<div class="form-group col-sm-6 col-md-6  ng-class: { 'has-error': $ctrl.bookForm.releaseDate.$invalid }">
+			<label class="control-label" for="releaseDate">Release date</label>
+			<input
+				name="releaseDate"
+				type="string"
+				class="form-control"
+				id="releaseDate"
+				ng-model="$ctrl.book.releaseDate"
+				placeholder="Release date"
+				data-date-format="dd. MM. yyyy"
+				bs-datepicker>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="form-group col-sm-6 col-md-6">
+			<label for="image">Description</label>
+			<textarea class="form-control book-form__textarea" rows="4" ng-model="$ctrl.book.desc"></textarea>
+		</div>
+
+		<div class="form-group col-sm-6 col-md-6">
+			<label for="image">Comments</label>
+			<textarea class="form-control book-form__textarea" rows="4" ng-model="$ctrl.book.comments"></textarea>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-6 col-md-6">
+			<div class="form-group">
+				<label for="rating">Rating</label>
+					<button
+						type="button"
+						class="btn btn-default"
+						ng-model="$ctrl.book.rating"
+						data-html="1"
+						data-toggle="true"
+						bs-options="option.value as option.label for option in $ctrl.ratingSelectOptions"
+						id="rating"
+						bs-select>
+						Action <span class="caret"></span>
+				</button>
+			</div>
+
+			<div class="checkbox">
+				<label>
+					<input ng-model='$ctrl.book.read' type="checkbox" ng-true-value="true" ng-false-value="false"> Read
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group col-sm-6 col-md-6">
+			<label for="image">Front page</label>
+			<p ng-if="$ctrl.book.imagePath"><img src="{{ $ctrl.book.imagePath }}" class="img-rounded book-form__image" /></p>
+			<input type="file" accept="image/*" file-model="$ctrl.book.image">
+		</div>
+
+	</div>
+
+	<button type="submit" class="btn btn-default" ng-disabled="$ctrl.bookForm.$invalid">Submit</button>
+	<p><i class="small">* Required fields</i></p>
+
+</form>

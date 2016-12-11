@@ -15,6 +15,7 @@ import bowerFiles from 'main-bower-files';
 import karma from 'karma';
 import browserify from 'browserify';
 import babelify from 'babelify';
+import babelHelpers from 'babelify-external-helpers';
 import stringify from 'stringify';
 import source from 'vinyl-source-stream';
 
@@ -26,12 +27,15 @@ const paths = {
 
 	packageJson: './package.json',
 
-	devJS: './src/**/*.js',
+	devJSLint: [ './src/**/*.js', '!./src/**/*.html' ],
+	devJSWatch: [ './src/**/*.js', './src/**/*.html', '!./src/index.html' ],
 	devLESS: './src/**/*.less',
 	testFilesPattern: './src/**/*.spec.js',
+	bootstrapFonts: './bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
 
 	distFolder: './dist/',
 	distVendorFolder: './dist/vendor/',
+	distFontsFolder: './dist/fonts/',
 	bowerFolder: './bower_components/',
 
 	appDistFileName: 'app.js',
@@ -41,6 +45,7 @@ const paths = {
 };
 
 const npmPackages = Object.keys(JSON.parse(fs.readFileSync(paths.packageJson, 'utf8')).dependencies);
+const babelOptions = JSON.parse(fs.readFileSync('./.babelrc', 'utf8'));
 
 function vendorBundler () {
 	const bundler = browserify()
@@ -53,11 +58,18 @@ function vendorBundler () {
 }
 
 function appBundler () {
-	const bundler = browserify()
+	const bundler = browserify({
+		paths: [ './node_modules', './src/' ],
+	})
 		.transform(stringify({
 			appliesTo: { includeExtensions: [ '.html' ] },
 		}))
-		.transform(babelify)
+		.plugin(babelHelpers)
+		.transform(babelify.configure(
+			Object.assign({}, babelOptions, {
+				plugins: babelOptions.plugins.concat('external-helpers-2'),
+			})
+		))
 		.require(require.resolve(paths.appFile), { entry: true });
 
 	return npmPackages
@@ -99,8 +111,13 @@ gulp.task('copy:bower:less', () => {
 		.pipe(gulp.dest(paths.distVendorFolder));
 });
 
+gulp.task('copy:bootstrap:fonts', () => {
+	return gulp.src(paths.bootstrapFonts)
+		.pipe(gulp.dest(paths.distFontsFolder));
+});
+
 gulp.task('lint:app', () => {
-	return gulp.src(paths.devJS)
+	return gulp.src(paths.devJSLint)
 		.pipe(eslint())
 		.pipe(eslint.format());
 });
@@ -108,6 +125,10 @@ gulp.task('lint:app', () => {
 gulp.task('set:app', () => {
 	return appBundler()
 		.bundle()
+		.on('error', function (err) {
+			gutil.log(`${gutil.colors.red('[set:app] ERROR')}: ${gutil.colors.yellow(err.message)}`);
+			this.emit('end');
+		})
 		.pipe(source(paths.appDistFileName))
 		.pipe(gulp.dest(paths.distFolder));
 });
@@ -122,6 +143,10 @@ gulp.task('set:npm', () => {
 gulp.task('set:less', () => {
 	return gulp.src(paths.lessFile)
 		.pipe(less())
+		.on('error', function (err) {
+			gutil.log(`${gutil.colors.red('[set:less] ERROR')}: ${gutil.colors.yellow(err.message)}`);
+			this.emit('end');
+		})
 		.pipe(gulp.dest(paths.distFolder));
 });
 
@@ -129,6 +154,7 @@ gulp.task('start:server', () => {
 	return gulp.src(paths.distFolder)
 		.pipe(webserver({
 			open: 'http://localhost:8000/',
+			fallback: 'index.html',
 		}));
 });
 
@@ -142,11 +168,11 @@ gulp.task('start:tests', () => {
 gulp.task('default', (done) => {
 	runSequence(
 		'lint:app',
-		[ 'set:index', 'copy:bower:js', 'copy:bower:less', 'set:npm', 'set:app', 'set:less' ],
+		[ 'set:index', 'copy:bootstrap:fonts', 'copy:bower:js', 'copy:bower:less', 'set:npm', 'set:app', 'set:less' ],
 		[ 'start:server', 'start:tests' ],
 		done
 	);
 
-	watch(paths.devJS, 'lint:app', 'set:app');
+	watch(paths.devJSWatch, 'lint:app', 'set:app');
 	watch(paths.devLESS, 'set:less');
 });

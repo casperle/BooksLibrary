@@ -9,10 +9,11 @@
 	"globals": {
 		"inject": true,
 		"angular": true,
+		"$": true,
+		"sails": true,
 	},
 	"rules": {
 		// ES6
-		"arrow-parens": 2,
 		"arrow-spacing": [ 2, { "before": true, "after": true } ],
 		"constructor-super": 2,
 		"no-class-assign": 2,
@@ -69,7 +70,6 @@
 		"callback-return": 2,
 		"eqeqeq": 1,
 		"handle-callback-err": 2,
-		"new-cap": 2,
 		"no-array-constructor": 2,
 		"no-caller": 2,
 		"no-eval": 2,
@@ -130,7 +130,6 @@
 		"space-unary-ops": [ 2, { "words": true, "nonwords": false } ],
 		"strict": [ 2, "never" ],
 		"max-depth": [ 1, { "max": 10 } ],
-		"max-params": [ 1, { "max": 3 } ],
 		"max-nested-callbacks": [ 1, { "max": 4 } ],
 	}
 }

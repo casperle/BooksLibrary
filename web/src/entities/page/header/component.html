@@ -1,0 +1,10 @@
+<nav class="navbar navbar-default" role="navigation" bs-navbar>
+	<div class="navbar-header">
+		<a class="navbar-brand" href="/">BooksLibrary</a>
+	</div>
+	<ul class="nav navbar-nav">
+		<li ng-repeat="item in $ctrl.items" data-match-route="{{ item.href }}" class="header__link ng-class: { 'active': item.active }">
+			<a href="{{ item.href }}">{{ item.text }}</a>
+		</li>
+	</ul>
+</nav>

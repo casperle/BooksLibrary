@@ -21,7 +21,7 @@ module.exports = function (config) {
 		concurrency: Infinity,
 
 		browserify: {
-			debug: false,
+			debug: true,
 			extensions: [ '.js' ],
 			transform: [ 'babelify' ],
 			plugin: [ 'stringify' ],

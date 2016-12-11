@@ -1,2 +1,3 @@
+import { ModuleName } from './common/enums';
 
-angular.module('booksLibrary', [ 'mgcrea.ngStrap', 'ngRoute' ]);
+angular.module(ModuleName, [ 'mgcrea.ngStrap', 'ngAnimate', 'ngSanitize', 'ui.router' ]);

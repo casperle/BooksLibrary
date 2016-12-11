@@ -1,0 +1,90 @@
+<div ng-if="$ctrl.libraryPage">
+	<div class="row">
+		<div class="form-group col-sm-6 col-md-3">
+			<label class="control-label" for="title">Title</label>
+			<input type="string" class="form-control" id="title" ng-model="$ctrl.titleQuery" placeholder="Title">
+		</div>
+
+		<div class="form-group col-sm-6 col-md-3">
+			<label class="control-label" for="author">Author</label>
+			<input type="string" class="form-control" id="author" ng-model="$ctrl.authorQuery" placeholder="Author">
+		</div>
+
+		<div class="form-group col-sm-6 col-md-3">
+			<label class="control-label">Rating</label>
+			<br>
+			<button
+					type="button"
+					class="btn btn-default input-medium"
+					ng-model="$ctrl.ratingQuery"
+					ng-init="$ctrl.ratingQuery = ''"
+					data-html="1"
+					data-toggle="true"
+					bs-options="rating.value as rating.label for rating in $ctrl.ratingSelectOptions"
+					id="rating"
+					bs-select>
+					Action <span class="caret"></span>
+			</button>
+		</div>
+
+		<div class="checkbox col-sm-6 col-md-3">
+			<label class="books-grid__checkbox-label">
+				<input ng-model="$ctrl.readQuery" ng-true-value="true" ng-false-value="''" type="checkbox"> Read
+			</label>
+			<br>
+			<label class="books-grid__checkbox-label">
+				<input ng-model="$ctrl.readQuery" ng-true-value="false" ng-false-value="''" type="checkbox">Not Read
+			</label>
+		</div>
+	</div>
+	<hr>
+</div>
+
+<div class="row books-grid">
+	<div
+	ng-repeat="
+		book in filteredBooks = ($ctrl.books |
+		filter: {
+			author: $ctrl.authorQuery,
+			title: $ctrl.titleQuery,
+			rating: $ctrl.ratingQuery,
+			read: $ctrl.readQuery
+		})"
+	class="col-sm-6 col-md-4">
+
+		<div class="thumbnail books-grid__inside">
+			<div class="caption">
+				<p ng-if="book.imagePath" class="books-grid__image-container img-rounded">
+					<img src="{{ book.imagePath }}" alt="{{ book.title }}" class="img-rounded">
+				</p>
+
+				<span class="glyphicon glyphicon-book books-grid__read-icon" aria-hidden="true" ng-if="book.read"></span>
+				<h3 class="books-grid__title" ng-click="$ctrl.openModal(book)">{{ book.title }}</h3>
+
+				<p>
+					<span
+						class="glyphicon books-grid__star {{ star.full ? 'glyphicon-star' : 'glyphicon-star-empty' }}"
+						aria-hidden="true"
+						ng-repeat="star in book.stars">
+					</span>
+				</p>
+
+				<p class="books-grid__author">{{ book.author }}</p>
+
+				<hr ng-if="$ctrl.libraryPage">
+
+				<p class="books-grid__options" ng-if="$ctrl.libraryPage">
+					<a href="#" class="btn btn-default" role="button" ng-click="$ctrl.openModal(book)">View</a>
+					<a href="#" class="btn btn-primary" ui-sref="books-edit-view({ bookId: book.id })" role="button">Edit</a>
+					<a href="#" class="btn btn-danger" ng-click="$ctrl.openPopover($event, book.id, $index)" role="button">Delete</a>
+				</p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="col-xs-12" ng-if="!filteredBooks.length">No result. Please change the filter options.</div>
+
+</div>

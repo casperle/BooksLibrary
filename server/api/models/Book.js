@@ -24,17 +24,16 @@ module.exports = {
 		author: {
 			type: 'string',
 		},
-		ratings: {
-			collection: 'rating',
-			via: 'book',
+		rating: {
+			type: 'integer',
+			enum: [ 1, 2, 3, 4, 5 ],
 		},
 		read: {
 			type: 'boolean',
 			defaultsTo: false,
 		},
 		comments: {
-			collection: 'comment',
-			via: 'book',
+			type: 'string',
 		},
 		imagePath: {
 			type: 'string',

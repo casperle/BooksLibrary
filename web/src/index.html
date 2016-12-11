@@ -1,13 +1,15 @@
 <html>
 	<head>
 		<title>Books library</title>
-		<link rel="stylesheet" type="text/css" href="./vendor/bowerPackages.css" media="screen" />
-		<link rel="stylesheet" type="text/css" href="./index.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/vendor/bowerPackages.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/index.css" media="screen" />
+		<base href="/">
 	</head>
-	<body>
-		<div ng-app="booksLibrary"></div>
-		<script type="text/javascript" src="./vendor/bowerPackages.js"></script>
-		<script type="text/javascript" src="./vendor/npmPackages.js"></script>
-		<script type="text/javascript" src="./app.js"></script>
+	<body ng-app="booksLibrary">
+		<ui-view></ui-view>
+
+		<script type="text/javascript" src="/vendor/bowerPackages.js"></script>
+		<script type="text/javascript" src="/vendor/npmPackages.js"></script>
+		<script type="text/javascript" src="/app.js"></script>
 	</body>
 </html>
