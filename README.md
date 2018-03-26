@@ -95,6 +95,7 @@ npm install
 bower install
 gulp
 ```
+While installing bower packages make sure that you choose angular 1.5.9. If you get `ENOSPC` while running gulp try this solution https://stackoverflow.com/a/17437601.
 
 **Gulp tasks**
 - `set:index` copies the index.html to the `dist` folder
